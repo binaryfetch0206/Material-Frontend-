@@ -15,6 +15,7 @@ export async function getAISuggestions(data) {
 
   // Prepare a structured prompt with all 18 inputs
 const prompt = `
+dont use tags like <think> just answer what i ask below!!!!!!!!!!!!.
 Analyze the following 18 properties of a material:
 
 Energy per Atom: ${data.energy_per_atom} eV
@@ -40,6 +41,7 @@ Respond EXACTLY in this format:
 1. First line: "Material likely stable" or "Material likely unstable"
 2. Next lines (optional if unstable): reasons or suggested value ranges
 3. Max 5 lines. Do NOT add extra explanation.
+
 `;
 
 
@@ -63,7 +65,7 @@ Respond EXACTLY in this format:
       body: JSON.stringify({
         model: "HuggingFaceTB/SmolLM3-3B:hf-inference",
         messages: [{ role: "user", content: prompt }],
-        max_tokens: 300,
+        max_tokens: 800,
       }),
     });
 
