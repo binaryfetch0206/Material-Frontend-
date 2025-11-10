@@ -21,6 +21,7 @@ function Navbar() {
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/prediction">Prediction</Link></li>
+           <li><Link to="/material-predictor">Material Predictor</Link></li>
           {/* <li><Link to="/materials">Material List</Link></li> */}
         </ul>
         <button className="theme-toggle" onClick={toggleTheme}>

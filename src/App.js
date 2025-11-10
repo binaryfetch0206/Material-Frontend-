@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 // import ProjectOverview from "./pages/ProjectOverview";
 // import MaterialList from "./pages/MaterialList";
 import MaterialForm from "./components/MaterialForm";
+import MaterialPredictor from "./components/pages/MaterialPredictor";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         {/* <Route path="/overview" element={<ProjectOverview />} />
         <Route path="/materials" element={<MaterialList />} /> */}
         <Route path="/prediction" element={<MaterialForm />} />
+        <Route path="/material-predictor" element={<MaterialPredictor />} />
       </Routes>
     </Router>
   );

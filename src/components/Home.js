@@ -107,7 +107,13 @@ function Home() {
                 <h4>Smart Materials</h4>
                 <p>Expanding possibilities in smart, hybrid, and multi-functional materials.</p>
               </div>
+              <div className="material-item">
+  <div className="material-icon">🔬</div>
+  <h4>Nano Composites</h4>
+  <p>Integrating nano-scale structures for enhanced strength, flexibility, and conductivity.</p>
+</div>
             </div>
+            
           </div>
         </div>
 
@@ -131,7 +137,7 @@ function Home() {
           {/* Project Feature 1 – Interactive Web App */}
           <div className="insight-item">
             <div className="insight-image">
-              <img src={require("../assets/chem elem.jpeg")} alt="Interactive Web App" />
+              <img src={require("../assets/home.png")} alt="Interactive Web App" />
             </div>
             <div className="insight-text">
               <h3>Interactive Web Application</h3>
@@ -152,7 +158,7 @@ function Home() {
           {/* Project Feature 2 – AI Recommendation System */}
           <div className="insight-item reverse">
             <div className="insight-image">
-              <img src={require("../assets/brass.jpg")} alt="AI Recommendation System" />
+              <img src={require("../assets/ai.webp")} alt="AI Recommendation System" />
             </div>
             <div className="insight-text">
               <h3>AI-Powered Recommendation System</h3>
@@ -173,7 +179,7 @@ function Home() {
           {/* Project Feature 3 – Multi-Property Trade-off Analysis */}
           <div className="insight-item">
             <div className="insight-image">
-              <img src={require("../assets/copper.jpeg")} alt="Multi-Property Trade-off" />
+              <img src={require("../assets/copper.png")} alt="Multi-Property Trade-off" />
             </div>
             <div className="insight-text">
               <h3>Multi-Property Trade-off Analysis</h3>
@@ -225,9 +231,9 @@ function Home() {
                   <div className="form-group">
                     <label>Properties</label>
                     <div className="property-inputs">
-                      <input type="text" placeholder="Energy Per Atom (eV)" disabled />
-                      <input type="text" placeholder="Fermi Energy (eV)" disabled />
-                      <input type="text" placeholder="Volume " disabled />
+                      <input type="text" placeholder="Strength" disabled />
+                      <input type="text" placeholder="Conductivity" disabled />
+                      <input type="text" placeholder="Flexibility" disabled />
                     </div>
                   </div>
                   <div className="form-group">
