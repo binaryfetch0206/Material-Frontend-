@@ -12,10 +12,10 @@ import {
 import { Card, CardContent, Typography } from "@mui/material";
 
 /**
- * Simple Linear Trade-Off Chart
- * Shows how predicted properties affect stability visually along a line.
+ * Linear Trade-Off Chart
+ * Visualizes how predicted properties affect stability.
  */
-export default function TradeOffChart({ predictions = {}, energy = {} }) {
+export default function TradeOffChart({ predictions = {}, energy = {}, isDark = false, tokens = {} }) {
   if (!predictions || Object.keys(predictions).length === 0) return null;
 
   // Key quantitative properties to visualize
@@ -35,7 +35,6 @@ export default function TradeOffChart({ predictions = {}, energy = {} }) {
     property: k,
     "Predicted Value": Number(predictions[k]) || 0,
     "Stability Index": (() => {
-      // Simple rule for effect direction
       switch (k) {
         case "band_gap":
           return normalize(predictions[k], 0, 5); // higher = stable
@@ -54,55 +53,106 @@ export default function TradeOffChart({ predictions = {}, energy = {} }) {
   }));
 
   return (
-    <Card elevation={3} sx={{ my: 3 }}>
+    <Card
+      elevation={3}
+      sx={{
+        my: 3,
+        borderRadius: 3,
+        border: `1px solid ${tokens?.borderSoft || (isDark ? "rgba(255,215,0,0.15)" : "rgba(212,175,55,0.15)")}`,
+        background: tokens?.surfaceSubtle || (isDark ? "rgba(25,25,35,0.9)" : "#fff"),
+        boxShadow: tokens?.shadow || (isDark ? "0 4px 20px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.1)"),
+      }}
+    >
       <CardContent>
-        <Typography variant="h6" gutterBottom>
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{
+            fontWeight: 700,
+            color: tokens?.textPrimary || (isDark ? "#f5f5f5" : "#1a1a1a"),
+            background: "linear-gradient(135deg, #d4af37 0%, #ffd700 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
           ⚖️ Trade-Off vs Stability Trend
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+
+        <Typography
+          variant="body2"
+          sx={{
+            color: tokens?.textMuted || (isDark ? "#b0b0b0" : "#555"),
+            mb: 2,
+          }}
+        >
           Visualizes how each predicted property aligns with stability.  
           Higher “Stability Index” → more stable.
         </Typography>
 
         <ResponsiveContainer width="100%" height={320}>
           <LineChart data={data} margin={{ top: 20, right: 40, left: 10, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="property" />
-            <YAxis domain={[0, 1]} />
-            <Tooltip
-              formatter={(value, name) =>
-                name === "Predicted Value"
-                  ? `${value.toFixed(3)}`
-                  : `${(value * 100).toFixed(1)}% stability`
-              }
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke={isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}
             />
-            <Legend />
+            <XAxis
+              dataKey="property"
+              tick={{ fill: tokens?.textMuted || (isDark ? "#ccc" : "#333") }}
+              stroke={tokens?.borderSoft || (isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)")}
+            />
+            <YAxis
+              domain={[0, 1]}
+              tick={{ fill: tokens?.textMuted || (isDark ? "#ccc" : "#333") }}
+              stroke={tokens?.borderSoft || (isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)")}
+            />
+            <Tooltip
+              contentStyle={{
+                background: tokens?.surface || (isDark ? "rgba(35,35,45,0.95)" : "#fff"),
+                border: `1px solid ${tokens?.border || (isDark ? "rgba(255,215,0,0.3)" : "rgba(212,175,55,0.3)")}`,
+                borderRadius: 8,
+                color: tokens?.textPrimary || (isDark ? "#fff" : "#000"),
+              }}
+            />
+            <Legend
+              wrapperStyle={{
+                color: tokens?.textSecondary || (isDark ? "#ccc" : "#333"),
+              }}
+            />
             <Line
               type="monotone"
               dataKey="Predicted Value"
-              stroke="#3b82f6"
+              stroke={isDark ? tokens?.goldBright || "#ffdd55" : "#3b82f6"}
               strokeWidth={2}
-              dot={{ r: 5 }}
+              dot={{ r: 5, fill: isDark ? tokens?.goldBright || "#ffdd55" : "#3b82f6" }}
             />
             <Line
               type="monotone"
               dataKey="Stability Index"
-              stroke="#10b981"
+              stroke={isDark ? tokens?.success || "#6bcf7f" : "#10b981"}
               strokeWidth={2}
-              dot={{ r: 5 }}
+              dot={{ r: 5, fill: isDark ? tokens?.success || "#6bcf7f" : "#10b981" }}
             />
           </LineChart>
         </ResponsiveContainer>
 
         {energy && (
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 2,
+              color: tokens?.textSecondary || (isDark ? "#ccc" : "#444"),
+            }}
+          >
             Energy Above Hull:{" "}
             <strong>
               {typeof energy?.value === "number"
                 ? `${energy.value.toFixed(3)} eV`
                 : "N/A"}
             </strong>{" "}
-            → {energy?.stable ? "Stable ✅" : "Unstable ⚠️"}
+            →{" "}
+            <span style={{ color: energy?.stable ? (isDark ? "#6bcf7f" : "#2e7d32") : (isDark ? "#ff6b6b" : "#d32f2f") }}>
+              {energy?.stable ? "Stable ✅" : "Unstable ⚠️"}
+            </span>
           </Typography>
         )}
       </CardContent>

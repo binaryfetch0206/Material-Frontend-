@@ -725,6 +725,8 @@ const inputSx = {
                     <TradeOffChart
                       predictions={result?.predicted_properties}
                       energy={result?.energy_above_hull_result}
+                      isDark={isDark}
+                      tokens={tokens}
                     />
                   </Box>
                 )}
